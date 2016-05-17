@@ -5,10 +5,14 @@
 
 
 # Configure PATH so that we can access our scripts below
-PATH=$PATH:~/.cabal/bin:~/.xmonad/bin
+PATH=~/bin:~/.cabal/bin:~/.xmonad/bin:$PATH
+export LANG=it_IT.utf8
 
 # Configure X
 xsetroot -cursor_name left_ptr &
+xsetroot -solid black
+setxkbmap it
+xmodmap ~/.Xmodmap
 xrdb -merge ~/.Xdefaults &
 
 # Start a window compositor. This ensures Google Chrome paints correctly.
@@ -17,19 +21,17 @@ xcompmgr -n &
 # Start the system tray
 tray &
 
-# Start two terminals
-gnome-terminal &
-gnome-terminal &
-
-# Start a browser
-google-chrome &
+firefox-bin &
+xterm &
 
 # Start screensaver
-# Kill gnome-screensaver if started by default
-killall gnome-screensaver &
 xscreensaver -no-splash &
 
 # Start sound server
 pulseaudio --start &
+
+eval $(ssh-agent -s)
+
+nm-applet &
 
 exec ck-launch-session dbus-launch --sh-syntax --exit-with-session xmonad
